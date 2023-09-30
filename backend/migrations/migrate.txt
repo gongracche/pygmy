@@ -1,0 +1,7 @@
+npx sequelize-cli model:generate --name Notes --attributes name:string
+
+npx sequelize-cli model:generate --name Users --attributes name:string
+npx sequelize-cli model:generate --name User_Auths --attributes user_id:integer,identity_type:integer,identifier:string,credential:string
+
+npx sequelize-cli db:migrate
+npx sequelize-cli db:migrate:undo

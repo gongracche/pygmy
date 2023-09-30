@@ -1,0 +1,47 @@
+version: '3'
+services:
+  # gitlab:
+  #   image: pygmy-gitlab
+  #   build: ./gitlab/
+  #   environment:
+  #     GITLAB_OMNIBUS_CONFIG: 
+  #       external_url = 'http://192.168.0.4:10080'
+  #       gitlab_rails['gitlab_shell_ssh_port'] = 10022
+  #       nginx['listen_port'] = 80
+  #   volumes:
+  #     - ./gitlab/data/etc/gitlab:/etc/gitlab
+  #     - ./gitlab/data/log/gitlab:/log/gitlab
+  #     - ./gitlab/data/opt/gitlab:/opt/gitlab
+  #   ports:
+  #     - '10080:80'
+  #     - '10022:22'
+  #   networks:
+  #     - gitlab
+  db:
+    image: pygmy-db
+    build: ./db/
+    volumes:
+      - ./db/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=pygmy
+      - MYSQL_USER=pygmy
+      - MYSQL_PASSWORD=pygmy
+      - TZ=Asia/Tokyo
+    ports:
+      - 3306:3306
+    networks:
+      - db
+networks:
+  # gitlab:
+  #   driver: bridge
+  #   ipam: 
+  #     driver: default
+  #     config:
+  #       - subnet: 192.168.100.0/24
+  db:
+    driver: bridge
+    ipam: 
+      driver: default
+      config: 
+        - subnet: 192.168.10.0/24
