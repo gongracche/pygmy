@@ -1,7 +1,7 @@
 <template>
   <div>Users</div>
   <div>
-    <table>
+    <table class="table table-bordered">
       <tr>
         <th>No</th>
         <th>id</th>
@@ -26,7 +26,7 @@
       </tr>
     </table>
   </div>
-  <button @click="createUser">New</button>
+  <button tyep="button" class="btn btn-primary" @click="createUser">New</button>
 </template>
 
 <script>

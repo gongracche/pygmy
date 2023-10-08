@@ -1,70 +1,46 @@
 <template>
     <div v-if="isCreate">
         <div>User create</div>
-        <div>
-            <table>
-            <tr>
-                <th>name</th>
-                <td><input v-model="createUser.name"/></td>
-            </tr>
-            </table>
+        <div class="form-group">
+             <label>name</label>
+             <input v-model="createUser.name" class="form-control mb-3"/>
         </div>
-        <button @click="createCancel">Cancel</button>
-        <button @click="createSave">Save</button>
+        <button @click="createCancel" class="btn btn-secondary me-2">Cancel</button>
+        <button @click="createSave" class="btn btn-primary">Save</button>
     </div>
     <div v-else-if="isEdit">
         <div v-if="editUser">
             <div>User edit</div>
-            <div>
-                <table>
-                <tr>
-                    <th>id</th>
-                    <td>{{ currentUser.id }}</td>
-                </tr>
-                <tr>
-                    <th>name</th>
-                    <td><input v-model="editUser.name"/></td>
-                </tr>
-                <tr>
-                    <th>created at</th>
-                    <td>{{ editUser.createdAt }}</td>
-                </tr>
-                <tr>
-                    <th>updated at</th>
-                    <td>{{ editUser.updatedAt }}</td>
-                </tr>
-                </table>
+            <div class="form-group">
+                <label>id</label>
+                <p class="form-control">{{ currentUser.id }}</p>
+                <label>name</label>
+                <input v-model="editUser.name" class="form-control mb-3"/>
+                <label>created at</label>
+                <p class="form-control">{{ editUser.createdAt }}</p>
+                <label>updated at</label>
+                <p class="form-control">{{ editUser.updatedAt }}</p>
             </div>
-            <button @click="editCancel">Cancel</button>
-            <button @click="editSave">Save</button>
+            <button @click="editCancel" class="btn btn-secondary me-2">Cancel</button>
+            <button @click="editSave" class="btn btn-primary">Save</button>
         </div>
     </div>
     <div v-else>
         <div v-if="currentUser">
             <div>User info</div>
-            <div>
-                <table>
-                <tr>
-                    <th>id</th>
-                    <td>{{ currentUser.id }}</td>
-                </tr>
-                <tr>
-                    <th>name</th>
-                    <td>{{ currentUser.name }}</td>
-                </tr>
-                <tr>
-                    <th>created at</th>
-                    <td>{{ currentUser.createdAt }}</td>
-                </tr>
-                <tr>
-                    <th>updated at</th>
-                    <td>{{ currentUser.updatedAt }}</td>
-                </tr>
-                </table>
+            <div class="form-group">
+                <label>id</label>
+                <p class="form-control">{{ currentUser.id }}</p>
+                <label>name</label>
+                <p class="form-control">{{ currentUser.name }}</p>
+                <label>created at</label>
+                <p class="form-control">{{ currentUser.createdAt }}</p>
+                <label>updated at</label>
+                <p class="form-control">{{ currentUser.updatedAt }}</p>
             </div>
-            <button @click="goList">List</button>
-            <button @click="editStart">Edit</button>
-            <button @click="deleteData">Delete</button>
+            <button @click="goList" class="btn btn-primary me-2">List</button>
+            <button @click="editStart" class="btn btn-secondary me-2">Edit</button>
+            <button @click="deleteData" class="btn btn-danger">Delete</button>
         </div>
     </div>
 </template>
