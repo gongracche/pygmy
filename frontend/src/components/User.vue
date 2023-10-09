@@ -44,7 +44,7 @@
                 <label>updated at</label>
                 <p class="form-control">{{ moment(currentUser.updatedAt) }}</p>
             </div>
-            <button @click="goList" class="btn btn-primary me-2">List</button>
+            <button @click="goUsers" class="btn btn-primary me-2">Users</button>
             <button @click="editStart" class="btn btn-secondary me-2">Edit</button>
             <button @click="deleteData" class="btn btn-danger">Delete</button>
         </div>
@@ -74,7 +74,7 @@ export default {
             })
         },
 
-        goList() {
+        goUsers() {
             this.$router.push({ name: "users" });
         },
 
