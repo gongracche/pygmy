@@ -1,14 +1,15 @@
 <template>
-  <div>Users</div>
+  <h5>Users</h5>
   <div>
     <table class="table table-bordered">
       <tr>
         <th>No</th>
         <th>id</th>
         <th>name</th>
+        <th>email</th>
         <th>created at</th>
         <th>updated at</th>
-        <th></th>
+        <th>action</th>
       </tr>
       <tr
         v-for="(user, index) in users"
@@ -18,6 +19,7 @@
         <td>{{ index + 1 }}</td>
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
         <td>{{ user.createdAt }}</td>
         <td>{{ user.updatedAt }}</td>
         <td>

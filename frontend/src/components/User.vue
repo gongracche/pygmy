@@ -1,21 +1,25 @@
 <template>
     <div v-if="isCreate">
-        <div>User create</div>
+        <h5>User create</h5>
         <div class="form-group">
              <label>name</label>
              <input v-model="createUser.name" class="form-control mb-3"/>
+             <label>email</label>
+             <input v-model="createUser.email" class="form-control mb-3"/>
         </div>
         <button @click="createCancel" class="btn btn-secondary me-2">Cancel</button>
         <button @click="createSave" class="btn btn-primary">Save</button>
     </div>
     <div v-else-if="isEdit">
         <div v-if="editUser">
-            <div>User edit</div>
+            <h5>User edit</h5>
             <div class="form-group">
                 <label>id</label>
                 <p class="form-control">{{ currentUser.id }}</p>
                 <label>name</label>
                 <input v-model="editUser.name" class="form-control mb-3"/>
+                <label>email</label>
+                <input v-model="editUser.email" class="form-control mb-3"/>
                 <label>created at</label>
                 <p class="form-control">{{ editUser.createdAt }}</p>
                 <label>updated at</label>
@@ -27,12 +31,14 @@
     </div>
     <div v-else>
         <div v-if="currentUser">
-            <div>User info</div>
+            <h5>User info</h5>
             <div class="form-group">
                 <label>id</label>
                 <p class="form-control">{{ currentUser.id }}</p>
                 <label>name</label>
                 <p class="form-control">{{ currentUser.name }}</p>
+                <label>email</label>
+                <p class="form-control">{{ currentUser.email }}</p>
                 <label>created at</label>
                 <p class="form-control">{{ currentUser.createdAt }}</p>
                 <label>updated at</label>
@@ -119,7 +125,10 @@ export default {
         if (id === 'new') {
             console.log('new');
             this.isCreate = true;
-            this.createUser = { name: null };
+            this.createUser = {
+                name: null,
+                email: null
+            };
         } else {
             this.getUser(id);
             this.isEdit = false;

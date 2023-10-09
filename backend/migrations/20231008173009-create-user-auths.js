@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('User_Auths', {
+    await queryInterface.createTable('UserAuths', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,19 +10,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       user_id: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       identity_type: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       identifier: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       credential: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
@@ -33,9 +29,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      uniqueKeys: {
+        UserAuthsIndex: {
+          fields: ['user_id', 'identity_type', 'identifier']
+        }
+      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('User_Auths');
+    await queryInterface.dropTable('UserAuths');
   }
 };
