@@ -21,9 +21,9 @@
                 <label>email</label>
                 <input v-model="editUser.email" class="form-control mb-3"/>
                 <label>created at</label>
-                <p class="form-control">{{ editUser.createdAt }}</p>
+                <p class="form-control">{{ moment(editUser.createdAt) }}</p>
                 <label>updated at</label>
-                <p class="form-control">{{ editUser.updatedAt }}</p>
+                <p class="form-control">{{ moment(editUser.updatedAt) }}</p>
             </div>
             <button @click="editCancel" class="btn btn-secondary me-2">Cancel</button>
             <button @click="editSave" class="btn btn-primary">Save</button>
@@ -40,9 +40,9 @@
                 <label>email</label>
                 <p class="form-control">{{ currentUser.email }}</p>
                 <label>created at</label>
-                <p class="form-control">{{ currentUser.createdAt }}</p>
+                <p class="form-control">{{ moment(currentUser.createdAt) }}</p>
                 <label>updated at</label>
-                <p class="form-control">{{ currentUser.updatedAt }}</p>
+                <p class="form-control">{{ moment(currentUser.updatedAt) }}</p>
             </div>
             <button @click="goList" class="btn btn-primary me-2">List</button>
             <button @click="editStart" class="btn btn-secondary me-2">Edit</button>
@@ -51,6 +51,7 @@
     </div>
 </template>
 <script>
+import moment from 'moment';
 import UserService from '../services/UserService';
 
 export default {
@@ -118,6 +119,10 @@ export default {
             .then(response=> {
                 this.$router.push({ name: "users"});
             })
+        },
+
+        moment (date) {
+          return moment(date).format("YYYY/MM/DD HH:mm:ss");
         }
     },
     mounted() {

@@ -20,8 +20,8 @@
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
-        <td>{{ user.createdAt }}</td>
-        <td>{{ user.updatedAt }}</td>
+        <td>{{ moment(user.createdAt) }}</td>
+        <td>{{ moment(user.updatedAt) }}</td>
         <td>
           <router-link :to="/users/ + user.id">View</router-link>
         </td>
@@ -33,6 +33,7 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import moment from 'moment';
 import UserService from '../services/UserService';
 
 export default {
@@ -66,6 +67,9 @@ export default {
         },
         createUser() {
             this.$router.push("/users/new");
+        },
+        moment (date) {
+          return moment(date).format("YYYY/MM/DD HH:mm:ss");
         }
     },
     mounted() {
