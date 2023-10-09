@@ -1,10 +1,10 @@
 import axios from "axios"
 
-const http = axios.create({
-    baseURL: "http://localhost:3000/",
+const backend = axios.create({
+    baseURL: `${import.meta.env.VITE_BACKEND_BASE_URL}`,
     headers: {
         "Content-Type": "application/json"
     }
 })
 
-export default http
+export default backend
