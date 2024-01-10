@@ -12,3 +12,13 @@ body {
 .pyg-bg-dark {
     background-color: #003366;
 }
+
+.pyg-bg-input {
+    background-color: #ffffef;
+}
+
+.pyg-error-message {
+    background-color: red;
+    color: white;
+    padding: 0.5rem;
+}

@@ -1,5 +1,6 @@
 <template>
   <h5>Users</h5>
+  <div>{{ message }}</div>
   <div>
     <table class="table table-bordered">
       <thead>
@@ -42,18 +43,18 @@ export default {
         return {
             users: [],
             currentUser: null,
-            currentIndex: -1
+            currentIndex: -1,
+            message: ''
         };
     },
     methods: {
         retriveUsers() {
-            console.log("retriveUsers called.");
             UserService.getAll()
                 .then(response => {
                 this.users = response.data;
             })
-                .catch(e => {
-                console.error(e);
+                .catch(error => {
+                console.error(error);
             });
         },
         setActiveUser(user, index) {

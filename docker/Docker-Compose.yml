@@ -1,22 +1,5 @@
 version: '3'
 services:
-  # gitlab:
-  #   image: pygmy-gitlab
-  #   build: ./gitlab/
-  #   environment:
-  #     GITLAB_OMNIBUS_CONFIG: 
-  #       external_url = 'http://192.168.0.4:10080'
-  #       gitlab_rails['gitlab_shell_ssh_port'] = 10022
-  #       nginx['listen_port'] = 80
-  #   volumes:
-  #     - ./gitlab/data/etc/gitlab:/etc/gitlab
-  #     - ./gitlab/data/log/gitlab:/log/gitlab
-  #     - ./gitlab/data/opt/gitlab:/opt/gitlab
-  #   ports:
-  #     - '10080:80'
-  #     - '10022:22'
-  #   networks:
-  #     - gitlab
   db:
     image: pygmy-db
     build: ./db/
@@ -31,6 +14,23 @@ services:
     ports:
       - 3306:3306
     networks:
+      - db
+  backend:
+    image: pygmy-backend
+    build: ./backend/
+    environment:
+      - NODE_ENV=production
+      - DB_USERNAME=pygmy
+      - DB_PASSWORD=pygmy
+      - DB_DATABASE=pygmy
+      - DB_HOST=db
+      - DB_DIALECT=mysql
+      - DB_TIMEZONE=+09:00
+    ports:
+      - 3000:3000
+    networks:
+      - db
+    depends_on:
       - db
 networks:
   # gitlab:

@@ -14,9 +14,6 @@ class UserService {
     }
 
     update(data) {
-        console.log("UserService.update called.");
-        console.log(data);
-        console.log(data.id);
         return backend.put("/users/" + data.id, data);
     }
 

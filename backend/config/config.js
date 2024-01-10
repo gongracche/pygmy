@@ -1,6 +1,6 @@
 module.exports = {
   "development": {
-    "username": "pygmy",
+    "username": process.env.DB_USERNAME,
     "password": "pygmy",
     "database": "pygmy",
     "host": "127.0.0.1",

@@ -4,11 +4,12 @@ const { check, validationResult } = require('express-validator');
 exports.create = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.send(400).json({ errors: errors.array() });
+        return res.sendStatus(422);
     }
 
     const user = {
-        name: req.body.name
+        name: req.body.name,
+        email: req.body.email
     };
 
     db.Users.create(user)
@@ -16,16 +17,13 @@ exports.create = (req, res) => {
         res.send(data);
     })
     .catch(err => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while creating the user."
-        });
+        res.sendStatus(500);
     })
-
 };
 
 exports.createValidation = [
-    check('name').not().isEmpty()
+    check('name').not().isEmpty(),
+    check('email').not().isEmpty()
 ];
 
 exports.findAll = (req, res) => {
@@ -34,10 +32,7 @@ exports.findAll = (req, res) => {
         res.send(data);
     })
     .catch(err => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving users."
-        });
+        res.sendStatus(500);
     })  
 };
 
@@ -45,13 +40,14 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
     db.Users.findByPk(id)
     .then(data => {
-        res.send(data);
+        if(data === null) {
+            res.sendStatus(404);
+        } else {
+            res.send(data);
+        }
     })
     .catch(err => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving users with id = " + id + "."
-        });
+        res.sendStatus(500);
     })
 };
 
@@ -63,18 +59,20 @@ exports.update = (req, res) => {
     .then(num => {
         if (num == 1) {
             res.send({
-                message: "Note was updated successfully."
+                message: "User was updated successfully."
+            })
+        } else if (num == 0) {
+            res.send({
+                message: "Cannot update Note with id=${id}. May be Note was not found or request body was empty."
             })
         } else {
             res.send({
-                message: "Cannot update Note with id=${id}. May be Note was not found or request body was empty."
+                message: "User was updated successfully."
             })
         }
     })
     .catch(err => {
-        res.send(500).send({
-            message: "Error updating Note with id=" + id
-        })
+        res.sendStatus(500);
     })
 };
 
@@ -97,9 +95,13 @@ exports.delete = (req, res) => {
             res.send({
                 message: "User was deleted successfully."
             })
-        } else {
+        } else if (num == 0) {
             res.send({
                 message: "Cannot delete Note with id=${id}. May be User was not found or request body was empty."
+            })
+        } else {
+            res.send({
+                message: "User was deleted successfully."
             })
         }
     })

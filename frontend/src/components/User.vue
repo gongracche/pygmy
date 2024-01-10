@@ -1,4 +1,7 @@
 <template>
+    <div v-if="errorMessage">
+        <div class="pyg-error-message">{{ errorMessage }}</div>
+    </div>
     <div v-if="isCreate">
         <h5>User create</h5>
         <div class="form-group">
@@ -17,9 +20,9 @@
                 <label>id</label>
                 <p class="form-control">{{ currentUser.id }}</p>
                 <label>name</label>
-                <input v-model="editUser.name" class="form-control mb-3"/>
+                <input v-model="editUser.name" class="form-control mb-3 pyg-bg-input"/>
                 <label>email</label>
-                <input v-model="editUser.email" class="form-control mb-3"/>
+                <input v-model="editUser.email" class="form-control mb-3 pyg-bg-input"/>
                 <label>created at</label>
                 <p class="form-control">{{ moment(editUser.createdAt) }}</p>
                 <label>updated at</label>
@@ -59,11 +62,11 @@ export default {
     data() {
         return {
             currentUser: null,
-            message: '',
             isEdit: false,
             editUser: null,
             isCreate: false,
-            createUser: null
+            createUser: null,
+            errorMessage: ''
         }
     },
     methods: {
@@ -71,6 +74,10 @@ export default {
             UserService.get(id)
             .then(response => {
                 this.currentUser = response.data;
+            })
+            .catch(error => {
+                const response = error.response;
+                this.errorMessage = response.data.message;
             })
         },
 
@@ -91,9 +98,13 @@ export default {
             var user = this.editUser;
             UserService.update(user)
             .then(response => {
-                this.currentUser = this.editUser;
+                this.currentUser = response.data;
                 this.editUser = null;
                 this.isEdit = false;
+            })
+            .catch(error => {
+                const response = error.response;
+                this.errorMessage = response.data.message;
             })
         },
 
@@ -108,6 +119,10 @@ export default {
             .then(response => {
                 this.$router.push({ name: "users" });
             })
+            .catch(error => {
+                const response = error.response;
+                this.errorMessage = response.data.message;
+            })
         },
 
         createCancel() {
@@ -118,6 +133,10 @@ export default {
             UserService.delete(this.currentUser.id)
             .then(response=> {
                 this.$router.push({ name: "users"});
+            })
+            .catch(error => {
+                const response = error.response;
+                this.errorMessage = response.data.message;
             })
         },
 
@@ -139,7 +158,6 @@ export default {
             this.isEdit = false;
             this.editUser = null;
         }
-        
     }
 }
 </script>
